@@ -18,7 +18,7 @@ def get_current_id(token:HTTPAuthorizationCredentials = Depends(bearer)):
          })
     return user_id
 
-def get_current_user(user_id = Depends(get_current_id), session:AsyncSession = Depends(get_session)):
+async def get_current_user(user_id = Depends(get_current_id), session:AsyncSession = Depends(get_session)):
     user = await session.scalar(select(User).where(User.id == user_id))
 
     if not user:
