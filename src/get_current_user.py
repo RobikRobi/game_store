@@ -19,7 +19,7 @@ def get_current_id(token:HTTPAuthorizationCredentials = Depends(bearer)):
     return user_id
 
 def get_current_user(user_id = Depends(get_current_id), session:AsyncSession = Depends(get_session)):
-    user = session.scalar(select(User).where(User.id == user_id))
+    user = await session.scalar(select(User).where(User.id == user_id))
 
     if not user:
         raise HTTPException(status_code=426,detail={

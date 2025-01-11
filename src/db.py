@@ -20,12 +20,3 @@ async def get_session():
 class Base(AsyncAttrs, DeclarativeBase):
     pass
 
-@app.get("/")
-async def create_db():
-    async with engine.begin() as conn:
-        try:
-            await conn.run_sync(Base.metadata.drop_all)
-        except:
-            pass
-        await  conn.run_sync(Base.metadata.create_all)
-    return({"msg":"db creat! =)"})
