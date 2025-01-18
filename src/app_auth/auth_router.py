@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from .auth_models import User
-from .auth_shema import UserRegister
+from .auth_shema import RegisterUser
 from fastapi import HTTPException
 from ..db import get_session
 from .auth_utilits import creat_access_token, encode_password, check_password
@@ -12,7 +12,7 @@ app = APIRouter(prefix="/users", tags=["Users"])
 
 
 @app.post("/register")
-async def create_user(user: UserRegister, session: AsyncSession = Depends(get_session)):
+async def create_user(user: RegisterUser, session: AsyncSession = Depends(get_session)):
     h_password = await encode_password(user.password)
     db_user = User(name=user.name, email=user.email, password=h_password)
     session.add(db_user)

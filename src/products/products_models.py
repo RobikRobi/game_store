@@ -38,7 +38,7 @@ class Product(Base):
     img:Mapped[str]  = mapped_column(nullable=True)
     
     subCategory_id:Mapped[int] = mapped_column(ForeignKey("subcategory_table.id", ondelete="CASCADE"))
-    subCategory:Mapped["SubCategory"] = relationship(back_populates="products", uselist=False)
+    subCategory:Mapped["SubCategory"] = relationship( uselist=False)
     
     
     sellerProducts:Mapped[list["SellerProduct"]] = relationship(uselist=True, back_populates="product")
