@@ -3,11 +3,11 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
-from ..db import get_session
-from ..app_auth.auth_models import User
-from ..seller.seller_models import SellerProfile
-from ..products.products_models import Product,SubCategory,Category
-from ..get_current_user import get_current_user
+from src.db import get_session
+from src.app_auth.auth_models import User
+from src.seller.seller_models import SellerProfile
+from src.products.products_models import Product,SubCategory,Category
+from src.get_current_user import get_current_user
 
 
 app = APIRouter(prefix="/admin", tags=["admin"])

@@ -1,6 +1,6 @@
 import jwt
 import bcrypt
-from ..config import configtoken
+from src.config import configtoken
 import datetime
 from fastapi import HTTPException
 

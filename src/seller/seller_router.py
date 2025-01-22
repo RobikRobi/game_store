@@ -9,7 +9,7 @@ from db import get_session
 from app_auth.auth_models import User
 
 from get_current_user import get_current_user,get_current_confirm_seller
-from .seller_models import SellerProfile,SellerProduct
+from src.seller.seller_models import SellerProfile,SellerProduct
 from products.products_models import Product,SubCategory,Category
 
 app = APIRouter(prefix="/seller", tags=["seller"])

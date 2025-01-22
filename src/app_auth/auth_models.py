@@ -2,15 +2,15 @@ import datetime
 import typing
 
 from sqlalchemy import ForeignKey, text
-from ..db import Base
+from src.db import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from ..db import Base
+from src.db import Base
 
 import typing
 
 if typing.TYPE_CHECKING:
-    from ..seller.seller_models import SellerProfile
+    from src.seller.seller_models import SellerProfile
 
 
 # модель таблицы с данными пользователей

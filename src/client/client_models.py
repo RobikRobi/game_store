@@ -3,9 +3,9 @@ import typing
 from sqlalchemy import ForeignKey, text
 from sqlalchemy.orm import  Mapped, mapped_column, relationship
 
-from ..types.currencyType import CurrencyType
+from src.types.currencyType import CurrencyType
 
-from ..db import Base
+from src.db import Base
 
 if typing.TYPE_CHECKING:
     from ..products.products_models import Product

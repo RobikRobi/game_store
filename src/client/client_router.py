@@ -4,13 +4,13 @@ from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from client_shema import CreateReview
-from ..db import get_session
-from ..app_auth.auth_models import User
+from src.db import get_session
+from src.app_auth.auth_models import User
 
-from ..get_current_user import get_current_user,get_current_id
-from ..products.products_models import Product,SubCategory,Category
-from ..seller.seller_models import SellerProfile,SellerProduct, Review
-from .client_models import ClientBacket
+from src.get_current_user import get_current_user,get_current_id
+from src.products.products_models import Product,SubCategory,Category
+from src.seller.seller_models import SellerProfile,SellerProduct, Review
+from src.client.client_models import ClientBacket
 
 app = APIRouter(prefix="/client", tags=["client"])
 

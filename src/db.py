@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession, AsyncAttrs
 from sqlalchemy.orm import DeclarativeBase
-from .config import config
+from src.config import config
 
 app = APIRouter(prefix="/db")
 
