@@ -14,7 +14,7 @@ app = APIRouter(prefix="/users", tags=["Users"])
 @app.post("/register")
 async def create_user(user: RegisterUser, session: AsyncSession = Depends(get_session)):
     h_password = await encode_password(user.password)
-    db_user = User(name=user.name, email=user.email, password=h_password)
+    db_user = User(name=user.name, email=user.email, password=h_password, dob=user.dob, surname=user.surname)
     session.add(db_user)
     await session.commit()
     await session.refresh(db_user)

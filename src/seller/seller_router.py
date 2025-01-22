@@ -1,16 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import select
+from sqlalchemy import select, func
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .seller_schema import CreateProduct, CreateSellerProfile
+from seller_shema import CreateProduct, CreateSellerProfile
 
-from ..db import get_session
-from ..app_auth.auth_models import User
+from db import get_session
+from app_auth.auth_models import User
 
-from ..get_current_user import get_current_user,get_current_confirm_seller
+from get_current_user import get_current_user,get_current_confirm_seller
 from .seller_models import SellerProfile,SellerProduct
-from ..products.products_models import Product,SubCategory,Category
+from products.products_models import Product,SubCategory,Category
 
 app = APIRouter(prefix="/seller", tags=["seller"])
 
@@ -22,7 +22,7 @@ async def get_products(session:AsyncSession = Depends(get_session)):
 
 @app.get("/profiles")
 async def get_profiles(session:AsyncSession = Depends(get_session)):
-    profiles = await session.scalars(select(SellerProfile))
+    profiles = await session.scalars(select((SellerProfile)).options(selectinload(SellerProfile.products).selectinload(SellerProduct.reviews)))
     return profiles.all()
 
 @app.get("/profiles/{id}")
