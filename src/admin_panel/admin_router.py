@@ -13,7 +13,7 @@ app = APIRouter(prefix="/admin", tags=["admin"])
 @app.post("/confirm/all")
 async def confirm_all( session:AsyncSession = Depends(get_session)):
     
-    profiles = await session.scalars(select(SellerProfile).where(SellerProfile.is_confirmed == False))
+    profiles = await session.scalars(select(SellerProfile).where(not SellerProfile.is_confirmed))
     for profile in profiles:
         profile.is_confirmed = True
     await session.commit()
@@ -28,7 +28,7 @@ async def create_category(name:str, session:AsyncSession = Depends(get_session))
     return newCategory
 
 @app.post("/Subcategory")
-async def create_category(name:str,category_id:int, session:AsyncSession = Depends(get_session)):
+async def create_subcategory(name:str,category_id:int, session:AsyncSession = Depends(get_session)):
     newCategory = SubCategory(name=name, category_id=category_id)
     
     session.add(newCategory)

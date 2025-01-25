@@ -1,5 +1,6 @@
 from pydantic import BaseModel
-from src.types.currencyType import CurrencyType
+from src.types.CurrencyType import CurrencyType
+
 class CreateSellerProfile(BaseModel):
     
     shop_name:str

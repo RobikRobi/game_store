@@ -19,7 +19,7 @@ async def get_products(session:AsyncSession = Depends(get_session)):
     products = await session.scalars(select(SellerProduct).options(selectinload(SellerProduct.product), selectinload(SellerProduct.sellerProfile)))
     return products.all()
     
-@app.post("/reviews/create")
+@app.post("products/reviews/create")
 async def create_review(data:CreateReview, user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
     review = Review(text=data.text,is_positive=data.is_positive,seller_product_id=data.seller_product_id, user_id=user.id)
     session.add(review)
@@ -27,7 +27,7 @@ async def create_review(data:CreateReview, user:User = Depends(get_current_user)
     await session.refresh(review)
     return review
 
-@app.get("/reviews")
+@app.get("products/reviews")
 async def get_reviews(user_id:int = Depends(get_current_id), session:AsyncSession = Depends(get_session)):
     user = await session.scalar(select(User).options(selectinload(User.reviews)).where(User.id == user_id))
     if not user:
@@ -40,7 +40,7 @@ async def get_reviews(user_id:int = Depends(get_current_id), session:AsyncSessio
     return user.reviews
 
 
-@app.delete("/reviews/delete/{id}")
+@app.delete("products/reviews/delete/{id}")
 async def delete_review(id:int, user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
     review = await session.scalar(select(Review).where(Review.id == id, Review.user_id == user.id))
     if not review:

@@ -2,12 +2,12 @@ import typing
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import  Mapped, mapped_column, relationship
 
-from src.types.currencyType import CurrencyType
+from src.types.CurrencyType import CurrencyType
 
 from src.db import Base
 
 if typing.TYPE_CHECKING:
-    from products.products_models import Product
+    from src.products.products_models import Product
     from src.app_auth.auth_models import User
     from src.client.client_models import ClientBacket
     
