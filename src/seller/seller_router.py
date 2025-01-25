@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import select, func
+from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -10,12 +10,12 @@ from app_auth.auth_models import User
 
 from get_current_user import get_current_user,get_current_confirm_seller
 from src.seller.seller_models import SellerProfile,SellerProduct
-from products.products_models import Product,SubCategory,Category
+from products.products_models import Product,SubCategory
 
 app = APIRouter(prefix="/seller", tags=["seller"])
 
 @app.get("/products/our")
-async def get_products(session:AsyncSession = Depends(get_session)):
+async def get_our_products(session:AsyncSession = Depends(get_session)):
     
     products = await session.scalars(select(Product).options(selectinload(Product.subCategory).selectinload(SubCategory.category)))
     return products.all()
@@ -49,7 +49,7 @@ async def create_profile(data:CreateSellerProfile,user:User = Depends(get_curren
     return newProfile
 
 @app.get("/profile")
-async def get_profile(user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
+async def get_current_profile(user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
     return user.profile
 
 @app.get("/profile/products")
@@ -69,7 +69,7 @@ async def create_product(data:CreateProduct, user:User = Depends(get_current_con
     return newProduct
     
 @app.delete("/products/delete/{id}")
-async def create_product(id:int, user:User = Depends(get_current_confirm_seller), session:AsyncSession = Depends(get_session)):
+async def delete_product(id:int, user:User = Depends(get_current_confirm_seller), session:AsyncSession = Depends(get_session)):
     product = await session.scalar(select(SellerProduct).where(SellerProduct.id == id).options(selectinload(SellerProduct.sellerProfile)))
     if product.sellerProfile != user.profile:
         raise HTTPException(status_code=403, detail={    

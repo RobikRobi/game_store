@@ -1,5 +1,5 @@
 import typing
-from sqlalchemy import ForeignKey, text
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import  Mapped, mapped_column, relationship
 
 from src.types.currencyType import CurrencyType

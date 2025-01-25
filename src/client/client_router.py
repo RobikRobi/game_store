@@ -90,7 +90,7 @@ async def update_backet(id:int, user:User = Depends(get_current_user), session:A
     return True
 
 @app.delete("/backet/delete/{id}")
-async def update_backet(id:int, user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
+async def delete_backet(id:int, user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
     product = await session.scalar(select(SellerProduct).where(SellerProduct.id == id))
     if not product:
         

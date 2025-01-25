@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter
 
 app = APIRouter(prefix="/games", tags=["games"])
 
