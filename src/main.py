@@ -9,6 +9,8 @@ from src.admin_panel.admin_router import app as admin_app
 
 from src.products.products_models import Product, Category, SubCategory
 from src.seller.seller_models import SellerProfile, SellerProduct
+from src.app_auth.auth_models import User, ClientBacket
+from src.orders.orders_models import Orders
 
 
 app = FastAPI()

@@ -8,8 +8,7 @@ from src.db import Base
 
 if typing.TYPE_CHECKING:
     from src.products.products_models import Product
-    from src.app_auth.auth_models import User
-    from src.client.client_models import ClientBacket
+    from src.app_auth.auth_models import User, ClientBacket
     
 
 

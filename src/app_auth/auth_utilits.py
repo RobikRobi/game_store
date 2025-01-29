@@ -10,11 +10,11 @@ async def encode_password(password:str) -> bytes:
     return new_password
 
 # проверка пароля
-def check_password(password: str, old_password: bytes) -> bool:
+async def check_password(password: str, old_password: bytes) -> bool:
     return bcrypt.checkpw(password=password.encode(), hashed_password=old_password)
 
 # создание токена
-def creat_access_token(
+async def creat_access_token(
     user_id: int,
     algorithm: str = configtoken.algorithm,
     private_key: str = configtoken.private_key.read_text()
@@ -27,7 +27,7 @@ def creat_access_token(
     return access_token
 
 
-def valid_access_token(
+async def valid_access_token(
     token: str, 
     algorithm: str = configtoken.algorithm,
     public_key: str = configtoken.public_key.read_text()

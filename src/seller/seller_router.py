@@ -11,10 +11,11 @@ from src.app_auth.auth_models import User
 from src.get_current_user import get_current_user,get_current_confirm_seller
 from src.seller.seller_models import SellerProfile,SellerProduct
 from src.products.products_models import Product,SubCategory
+from src.types.ProductType import ProductType
 
 app = APIRouter(prefix="/seller", tags=["seller"])
 
-@app.get("/products/")
+@app.get("/products/", response_model=list[ProductType])
 async def get_our_products(session:AsyncSession = Depends(get_session)):
     
     products = await session.scalars(select(Product).options(selectinload(Product.subCategory).selectinload(SubCategory.category)))

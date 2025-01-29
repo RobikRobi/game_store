@@ -10,11 +10,12 @@ from src.app_auth.auth_models import User
 from src.get_current_user import get_current_user,get_current_id
 from src.products.products_models import Product,SubCategory,Category
 from src.seller.seller_models import SellerProfile,SellerProduct, Review
-from src.client.client_models import ClientBacket
+from src.app_auth.auth_models import ClientBacket
+from src.types.ProductType import ProductType
 
 app = APIRouter(prefix="/client", tags=["client"])
 
-@app.get("/products")
+@app.get("/products", response_model=list[ProductType])
 async def get_products(session:AsyncSession = Depends(get_session)):
     products = await session.scalars(select(SellerProduct).options(selectinload(SellerProduct.product), selectinload(SellerProduct.sellerProfile)))
     return products.all()
@@ -54,7 +55,6 @@ async def delete_review(id:int, user:User = Depends(get_current_user), session:A
     return True
 
 
-
 @app.get("/backet")
 async def get_backet(user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
     total_price = await session.scalar(select(func.sum(ClientBacket.counts*SellerProduct.price))
@@ -72,6 +72,8 @@ async def get_backet(user:User = Depends(get_current_user), session:AsyncSession
     }
    
     return data
+
+
 @app.put("/backet/add/{id}")
 async def update_backet(id:int, user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
     product = await session.scalar(select(SellerProduct).where(SellerProduct.id == id))
@@ -88,6 +90,7 @@ async def update_backet(id:int, user:User = Depends(get_current_user), session:A
         user.backet.append(product)
     await session.commit()
     return True
+
 
 @app.delete("/backet/delete/{id}")
 async def delete_backet(id:int, user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
