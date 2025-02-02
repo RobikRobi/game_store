@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException
+import os
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
+from fastapi.responses import FileResponse
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -12,6 +14,7 @@ from src.get_current_user import get_current_user,get_current_confirm_seller
 from src.seller.seller_models import SellerProfile,SellerProduct
 from src.products.products_models import Product,SubCategory
 from src.types.ProductType import ProductType
+UPLOAD_FOLDER = 'uploads'
 
 app = APIRouter(prefix="/seller", tags=["seller"])
 
@@ -69,6 +72,46 @@ async def create_product(data:CreateProduct, user:User = Depends(get_current_con
     
     return newProduct
     
+
+@app.post("/profile/current/products/create/image")
+async def create_product_image(product_id:int,file: UploadFile = File(...), user:User = Depends(get_current_confirm_seller), session:AsyncSession = Depends(get_session)):
+    product = await session.scalar(select(SellerProduct).where(SellerProduct.id == product_id).options(selectinload(SellerProduct.sellerProfile)))
+    if product.sellerProfile != user.profile:
+        raise HTTPException(status_code=403, detail={    
+            "details":"You are not the seller of this product",
+            "status":403
+        })
+    file_location = f"{UPLOAD_FOLDER}/{product.id}.png"
+    with open(file_location, "wb") as f:
+        f.write(await file.read())
+    product.img = str(file_location)
+    await session.commit()
+    await session.refresh(product)
+    return product
+
+@app.get("/profile/current/products/image/{id}")
+async def get_product_image(id:int, session:AsyncSession = Depends(get_session)):
+    product = await session.scalar(select(SellerProduct).where(SellerProduct.id == id))
+    if not product:
+        raise HTTPException(status_code=404, detail={    
+            "details":"Product image not found",
+            "status":404
+        })
+    if not product.img:
+        raise HTTPException(status_code=404, detail={    
+            "details":"Product image not found",
+            "status":404
+        })
+    file_location = str(product.img)
+        
+    if not os.path.exists(file_location):
+        raise HTTPException(status_code=404, detail={    
+            "details":"Product image not found",
+            "status":404
+        })
+    return FileResponse(file_location)
+
+
 @app.delete("/profile/current/products/delete/{id}")
 async def delete_product(id:int, user:User = Depends(get_current_confirm_seller), session:AsyncSession = Depends(get_session)):
     product = await session.scalar(select(SellerProduct).where(SellerProduct.id == id).options(selectinload(SellerProduct.sellerProfile)))

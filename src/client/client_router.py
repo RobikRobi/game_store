@@ -3,7 +3,7 @@ from sqlalchemy import select, func
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from client_shema import CreateReview
+from .client_shema import CreateReview
 from src.db import get_session
 from src.app_auth.auth_models import User
 

@@ -13,11 +13,11 @@ class Chat(Base):
 
     id:Mapped[int] = mapped_column(primary_key=True)
 
-    user_one_id:Mapped[int] = mapped_column(ForeignKey("user_tabel.id", ondelete="CASCADE"))
-    user_one:Mapped["User"] = relationship(uselist=False, foreign_keys=[user_one_id])
+    sender_id:Mapped[int] = mapped_column(ForeignKey("user_tabel.id", ondelete="CASCADE"))
+    sender:Mapped["User"] = relationship(uselist=False, foreign_keys=[sender_id])
 
-    user_two_id:Mapped[int] = mapped_column(ForeignKey("user_tabel.id", ondelete="CASCADE"))
-    user_two:Mapped["User"] = relationship(uselist=False, foreign_keys=[user_two_id])
+    recipient_id:Mapped[int] = mapped_column(ForeignKey("user_tabel.id", ondelete="CASCADE"))
+    recipient:Mapped["User"] = relationship(uselist=False, foreign_keys=["recipient_id"])
 
     messages:Mapped[list["Message"]] = relationship(back_populates="chat", uselist=True)
     

@@ -9,8 +9,8 @@ from src.app_auth.auth_utilits import valid_access_token
 bearer = HTTPBearer()
   
 
-def get_current_id(token:HTTPAuthorizationCredentials = Depends(bearer)):
-    user_id = valid_access_token(token=token.credentials)
+async def get_current_id(token:HTTPAuthorizationCredentials = Depends(bearer)):
+    user_id = await valid_access_token(token=token.credentials)
     if not user_id:
         raise HTTPException(status_code=426, detail={
             "token":"Your token is not valid",
