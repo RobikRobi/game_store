@@ -9,15 +9,15 @@ if typing.TYPE_CHECKING:
     from src.app_auth.auth_models import User
 
 class Chat(Base):
-    __tablename__ = "chat_tabel"
+    __tablename__ = "chat_table"
 
     id:Mapped[int] = mapped_column(primary_key=True)
 
-    sender_id:Mapped[int] = mapped_column(ForeignKey("user_tabel.id", ondelete="CASCADE"))
+    sender_id:Mapped[int] = mapped_column(ForeignKey("user_table.id", ondelete="CASCADE"))
     sender:Mapped["User"] = relationship(uselist=False, foreign_keys=[sender_id])
 
-    recipient_id:Mapped[int] = mapped_column(ForeignKey("user_tabel.id", ondelete="CASCADE"))
-    recipient:Mapped["User"] = relationship(uselist=False, foreign_keys=["recipient_id"])
+    recipient_id:Mapped[int] = mapped_column(ForeignKey("user_table.id", ondelete="CASCADE"))
+    recipient:Mapped["User"] = relationship(uselist=False, foreign_keys=[recipient_id])
 
     messages:Mapped[list["Message"]] = relationship(back_populates="chat", uselist=True)
     
