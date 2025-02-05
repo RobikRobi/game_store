@@ -5,7 +5,7 @@ from src.app_auth.auth_models import User
 from src.app_auth.auth_shema import RegisterUser, ShowUser, LoginUser, UpdateUser
 from fastapi import HTTPException
 from src.db import get_session
-from src.app_auth.auth_utilits import creat_access_token, encode_password, check_password
+from src.app_auth.auth_utilits import create_access_token, encode_password, check_password
 from src.get_current_user import get_current_user
 
 app = APIRouter(prefix="/users", tags=["Users"])
@@ -21,7 +21,7 @@ async def login_user(data:LoginUser,session:AsyncSession = Depends(get_session))
 
     if user:
         if await check_password(password=data.password, old_password=user.password):
-                user_token = await creat_access_token(user_id=user.id)
+                user_token = await create_access_token(user_id=user.id)
                 return {"token":user_token}
 
     raise HTTPException(status_code=401, detail={
@@ -52,7 +52,7 @@ async def register_user(data:RegisterUser ,session:AsyncSession = Depends(get_se
         
     await session.commit()
         
-    user_token = await creat_access_token(user_id=user_id)
+    user_token = await create_access_token(user_id=user_id)
     data_dict["token"] = user_token  
         
     return data_dict
