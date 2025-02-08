@@ -36,21 +36,32 @@ async def get_profile(id:int, session:AsyncSession = Depends(get_session)):
 
 
 @app.post("/profile/current/create")
-async def create_profile(data:CreateSellerProfile,user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
+async def create_profile(data: CreateSellerProfile, user: User = Depends(get_current_user), session: AsyncSession = Depends(get_session)):
     if user.profile:
-        raise HTTPException(status_code=426, detail={
-            "token":"You already have a profile",
-            "status":426
+        raise HTTPException(status_code=400, detail={
+            "message": "You already have a profile",
+            "status": 400
         })
-    newProfile = SellerProfile(shop_name=data.shop_name,number=data.number,user=user)
     
-    session.add(newProfile)
-    await session.commit()
-    
-    
-    await session.refresh(newProfile)
-    
-    return newProfile
+    try:
+        new_profile = SellerProfile(
+            shop_name=data.shop_name.strip(),
+            number=data.number.strip(),
+            user=user
+        )
+        
+        session.add(new_profile)
+        await session.commit()
+        await session.refresh(new_profile)
+        
+        return new_profile
+        
+    except Exception as e:
+        await session.rollback()
+        raise HTTPException(status_code=500, detail={
+            "message": "Failed to create profile",
+            "status": 500
+        })
 
 @app.get("/profile/current")
 async def get_current_profile(user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):

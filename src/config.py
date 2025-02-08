@@ -10,7 +10,6 @@ class AuthData(BaseModel):
     algorithm: str = 'RS256'
     days: int = 31
 
-
 configtoken = AuthData()
 
 class Config(BaseSettings):

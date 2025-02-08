@@ -5,7 +5,7 @@ from src.app_auth.auth_models import User
 from src.app_auth.auth_shema import RegisterUser, ShowUser, LoginUser, UpdateUser
 from fastapi import HTTPException
 from src.db import get_session
-from src.app_auth.auth_utilits import create_access_token, encode_password, check_password
+from src.app_auth.auth_utilits import create_access_token, dencode_password, check_password
 from src.get_current_user import get_current_user
 
 app = APIRouter(prefix="/users", tags=["Users"])
@@ -42,7 +42,7 @@ async def register_user(data:RegisterUser ,session:AsyncSession = Depends(get_se
         
     data_dict = data.model_dump()
         
-    data_dict["password"] = await encode_password(password=data.password)
+    data_dict["password"] = await dencode_password(password=data.password)
     
     user = User(**data_dict)
     session.add(user) 
