@@ -3,7 +3,6 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, Asyn
 from sqlalchemy.orm import DeclarativeBase
 from src.config import config
 
-app = APIRouter(prefix="/db")
 
 DATABASE_URL = f"postgresql+asyncpg://{config.user}:{config.password}@{config.host}/{config.database}"
 

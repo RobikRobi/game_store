@@ -14,7 +14,7 @@ from src.get_current_user import get_current_user,get_current_confirm_seller
 from src.seller.seller_models import SellerProfile,SellerProduct
 from src.products.products_models import Product,SubCategory
 from src.types.ProductType import ProductType
-UPLOAD_FOLDER = 'uploads'
+from src.constants import UPLOAD_FOLDER
 
 app = APIRouter(prefix="/seller", tags=["seller"])
 
@@ -29,9 +29,9 @@ async def get_profiles(session:AsyncSession = Depends(get_session)):
     profiles = await session.scalars(select((SellerProfile)).options(selectinload(SellerProfile.products).selectinload(SellerProduct.reviews)))
     return profiles.all()
 
-@app.get("/profiles/{id}")
-async def get_profile(id:int, session:AsyncSession = Depends(get_session)):
-    profile = await session.scalar(select(SellerProfile).where(SellerProfile.id == id).options(selectinload(SellerProfile.products)))
+@app.get("/profiles/{profile_id}")
+async def get_profile(profile_id:int, session:AsyncSession = Depends(get_session)):
+    profile = await session.scalar(select(SellerProfile).where(SellerProfile.id == profile_id).options(selectinload(SellerProfile.products)))
     return profile
 
 
@@ -79,7 +79,7 @@ async def get_products(user = Depends(get_current_confirm_seller), session:Async
 
 @app.post("/profile/current/products/create")
 async def create_product(data:CreateProduct, user:User = Depends(get_current_confirm_seller), session:AsyncSession = Depends(get_session)):
-    newProduct = SellerProduct(description=data.description, price=data.price, currency=data.currency, sellerProfile=user.profile, product_id=data.product_id)
+    newProduct = SellerProduct(**data.model_dump())
     session.add(newProduct)
     await session.commit()
     await session.refresh(newProduct)
@@ -103,9 +103,9 @@ async def create_product_image(product_id:int,file: UploadFile = File(...), user
     await session.refresh(product)
     return product
 
-@app.get("/profile/current/products/image/{id}")
-async def get_product_image(id:int, session:AsyncSession = Depends(get_session)):
-    product = await session.scalar(select(SellerProduct).where(SellerProduct.id == id))
+@app.get("/profile/current/products/image/{product_id}")
+async def get_product_image(product_id:int, session:AsyncSession = Depends(get_session)):
+    product = await session.scalar(select(SellerProduct).where(SellerProduct.id == product_id))
     if not product:
         raise HTTPException(status_code=404, detail={    
             "details":"Product image not found",
@@ -126,9 +126,9 @@ async def get_product_image(id:int, session:AsyncSession = Depends(get_session))
     return FileResponse(file_location)
 
 
-@app.delete("/profile/current/products/delete/{id}")
-async def delete_product(id:int, user:User = Depends(get_current_confirm_seller), session:AsyncSession = Depends(get_session)):
-    product = await session.scalar(select(SellerProduct).where(SellerProduct.id == id).options(selectinload(SellerProduct.sellerProfile)))
+@app.delete("/profile/current/products/delete/{product_id}")
+async def delete_product(product_id:int, user:User = Depends(get_current_confirm_seller), session:AsyncSession = Depends(get_session)):
+    product = await session.scalar(select(SellerProduct).where(SellerProduct.id == product_id).options(selectinload(SellerProduct.sellerProfile)))
     if product.sellerProfile != user.profile:
         raise HTTPException(status_code=403, detail={    
             "token":"You are not the seller of this product",

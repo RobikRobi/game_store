@@ -41,9 +41,9 @@ async def get_reviews(user_id:int = Depends(get_current_id), session:AsyncSessio
     return user.reviews
 
 
-@app.delete("products/reviews/delete/{id}")
-async def delete_review(id:int, user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
-    review = await session.scalar(select(Review).where(Review.id == id, Review.user_id == user.id))
+@app.delete("products/reviews/delete/{review_id}")
+async def delete_review(review_id:int, user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
+    review = await session.scalar(select(Review).where(Review.id == review_id, Review.user_id == user.id))
     if not review:
         
             raise HTTPException(status_code=426, detail={
@@ -74,10 +74,10 @@ async def get_backet(user:User = Depends(get_current_user), session:AsyncSession
     return data
 
 
-@app.put("/backet/add/{id}")
-async def update_backet(id:int, user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
-    product = await session.scalar(select(SellerProduct).where(SellerProduct.id == id))
-    backet_product = await session.scalar(select(ClientBacket).where(ClientBacket.product_id == id, ClientBacket.user_id == user.id))
+@app.put("/backet/add/{backet_id}")
+async def update_backet(backet_id:int, user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
+    product = await session.scalar(select(SellerProduct).where(SellerProduct.id == backet_id))
+    backet_product = await session.scalar(select(ClientBacket).where(ClientBacket.product_id == backet_id, ClientBacket.user_id == user.id))
     if not product:
         
             raise HTTPException(status_code=426, detail={
@@ -92,9 +92,9 @@ async def update_backet(id:int, user:User = Depends(get_current_user), session:A
     return True
 
 
-@app.delete("/backet/delete/{id}")
-async def delete_backet(id:int, user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
-    product = await session.scalar(select(SellerProduct).where(SellerProduct.id == id))
+@app.delete("/backet/delete/{backet_id}")
+async def delete_backet(backet_id:int, user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
+    product = await session.scalar(select(SellerProduct).where(SellerProduct.id == backet_id))
     if not product:
         
             raise HTTPException(status_code=426, detail={

@@ -10,7 +10,7 @@ from src.app_auth.auth_models import User
 from src.app_auth.auth_models import ClientBacket
 from src.orders.orders_models import Orders, OrdersSellerProduct
 from src.seller.seller_models import SellerProduct
-from src.types.OrderStatusType import OrderStatus
+from types.OrderStatusEnum import OrderStatus
 
 app = APIRouter(prefix="/orders", tags=["orders"])
 
@@ -52,9 +52,9 @@ async def get_orders(user:User = Depends(get_current_user), session:AsyncSession
     return orders.all()
 
 
-@app.get("/orders/{id}")
-async def get_order(id:int, user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
-    order = await session.scalar(select(Orders).where(Orders.id == id, Orders.user_id == user.id))
+@app.get("/orders/{order_id}")
+async def get_order(order_id:int, user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
+    order = await session.scalar(select(Orders).where(Orders.id == order_id, Orders.user_id == user.id))
     if not order:
         raise HTTPException(status_code=426, detail={
             "details":"This order is not exists",

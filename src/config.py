@@ -10,9 +10,8 @@ class AuthData(BaseModel):
     algorithm: str = 'RS256'
     days: int = 31
 
-configtoken = AuthData()
 
-class Config(BaseSettings):
+class EnvData(BaseSettings):
     database:str
     user: str
     password: str
@@ -20,4 +19,10 @@ class Config(BaseSettings):
     class Config:
         env_file = ".env"
 
+
+class Config(BaseModel):
+    auth_data:AuthData = AuthData()
+    env_data:EnvData = EnvData()
+
+    
 config = Config()

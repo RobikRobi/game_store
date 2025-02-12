@@ -2,7 +2,7 @@ import typing
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import  Mapped, mapped_column, relationship
 
-from src.types.CurrencyType import CurrencyType
+from types.CurrencyEnum import CurrencyType
 
 from src.db import Base
 

@@ -10,8 +10,6 @@ from src.chat.chat_models import Chat, Message
 
 from src.chat.WebsocetConnect import manager
 
-from src.db import async_session
-
 # Создаем экземпляр маршрутизатора с префиксом /chat и тегом "Chat"
 app = APIRouter(prefix='/chat', tags=['Chat'])
 

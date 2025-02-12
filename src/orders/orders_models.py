@@ -4,7 +4,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import  Mapped, mapped_column,relationship
 
 from src.db import Base
-from src.types.OrderStatusType import OrderStatus
+from types.OrderStatusEnum import OrderStatus
 
 if typing.TYPE_CHECKING:
     from src.app_auth.auth_models import User
