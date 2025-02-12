@@ -13,11 +13,11 @@ app = APIRouter(prefix="/admin", tags=["admin"])
 @app.post("/confirm/all")
 async def confirm_all( session:AsyncSession = Depends(get_session)):
     
-    profiles = await session.scalars(select(SellerProfile).where(not SellerProfile.is_confirmed))
+    profiles = await session.scalars(select(SellerProfile).where(SellerProfile.is_confirmed == False))
     for profile in profiles:
         profile.is_confirmed = True
     await session.commit()
-    return True
+    return {"status":"200"}
 
 @app.post("/category")
 async def create_category(name:str, session:AsyncSession = Depends(get_session)):
@@ -25,6 +25,7 @@ async def create_category(name:str, session:AsyncSession = Depends(get_session))
     
     session.add(newCategory)
     await session.commit()
+    await session.refresh(newCategory)
     return newCategory
 
 @app.post("/Subcategory")
@@ -33,6 +34,7 @@ async def create_subcategory(name:str,category_id:int, session:AsyncSession = De
     
     session.add(newCategory)
     await session.commit()
+    await session.refresh(newCategory)
     return newCategory
 
 @app.post("/product/create")
@@ -41,4 +43,5 @@ async def create_product(name:str, description:str, subCategory_id:int, session:
     
     session.add(newProduct)
     await session.commit()
+    await session.refresh(newProduct)
     return newProduct

@@ -35,6 +35,7 @@ async def get_profile(id:int, session:AsyncSession = Depends(get_session)):
     return profile
 
 
+
 @app.post("/profile/current/create")
 async def create_profile(data: CreateSellerProfile, user: User = Depends(get_current_user), session: AsyncSession = Depends(get_session)):
     if user.profile:
@@ -63,9 +64,11 @@ async def create_profile(data: CreateSellerProfile, user: User = Depends(get_cur
             "status": 500
         })
 
+
 @app.get("/profile/current")
 async def get_current_profile(user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
     return user.profile
+
 
 @app.get("/profile/current/products")
 async def get_products(user = Depends(get_current_confirm_seller), session:AsyncSession = Depends(get_session)):
@@ -76,7 +79,7 @@ async def get_products(user = Depends(get_current_confirm_seller), session:Async
 
 @app.post("/profile/current/products/create")
 async def create_product(data:CreateProduct, user:User = Depends(get_current_confirm_seller), session:AsyncSession = Depends(get_session)):
-    newProduct = SellerProduct(description=data.description,price=data.price,currency=data.currency,sellerProfile=user.profile, product_id= data.product_id)
+    newProduct = SellerProduct(description=data.description, price=data.price, currency=data.currency, sellerProfile=user.profile, product_id=data.product_id)
     session.add(newProduct)
     await session.commit()
     await session.refresh(newProduct)
