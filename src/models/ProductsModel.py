@@ -1,4 +1,3 @@
-
 import typing
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import  Mapped, mapped_column, relationship
@@ -6,7 +5,7 @@ from sqlalchemy.orm import  Mapped, mapped_column, relationship
 from src.db import Base
 
 if typing.TYPE_CHECKING:
-    from src.seller.seller_models import SellerProduct
+    from .SellerModel import SellerProduct
     
 class Category(Base):
     __tablename__ = "category_table"

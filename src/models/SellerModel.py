@@ -7,8 +7,8 @@ from types.CurrencyEnum import CurrencyType
 from src.db import Base
 
 if typing.TYPE_CHECKING:
-    from src.products.products_models import Product
-    from src.app_auth.auth_models import User, ClientBacket
+    from .ProductsModel import Product
+    from .UserModel import User
     
 
 

@@ -7,8 +7,8 @@ from src.db import Base
 from types.OrderStatusEnum import OrderStatus
 
 if typing.TYPE_CHECKING:
-    from src.app_auth.auth_models import User
-    from src.seller.seller_models import SellerProduct
+    from .UserModel import User
+    from SellerModel import SellerProduct
 
 class OrdersSellerProduct(Base):
     __tablename__ = "orders_seller_product_table"

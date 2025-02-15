@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from src.app_auth.auth_models import User
+from src.models.UserModel import User
 from src.app_auth.auth_shema import RegisterUser, ShowUser, LoginUser, UpdateUser
 from fastapi import HTTPException
 from src.db import get_session

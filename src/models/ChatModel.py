@@ -6,7 +6,7 @@ from sqlalchemy.orm import  Mapped, mapped_column,relationship
 from src.db import Base
 
 if typing.TYPE_CHECKING:
-    from src.app_auth.auth_models import User
+    from .UserModel import User
 
 class Chat(Base):
     __tablename__ = "chat_table"

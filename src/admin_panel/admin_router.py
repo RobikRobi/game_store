@@ -4,8 +4,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 
 from src.db import get_session
-from src.seller.seller_models import SellerProfile
-from src.products.products_models import Product,SubCategory,Category
+from src.models.SellerModel import SellerProfile
+from src.models.ProductsModel import Product,SubCategory,Category
 
 
 app = APIRouter(prefix="/admin", tags=["admin"])

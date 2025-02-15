@@ -5,8 +5,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from src.get_current_user import get_current_user
 from src.db import get_session
 
-from src.app_auth.auth_models import User
-from src.chat.chat_models import Chat, Message
+from src.models.UserModel import User
+from src.models.ChatModel import Chat, Message
 
 from src.chat.WebsocetConnect import manager
 

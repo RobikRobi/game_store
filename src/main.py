@@ -11,11 +11,12 @@ from src.chat.chat_router import app as chat_app
 
 from src.admin_panel.admin_router import app as admin_app
 
-from src.products.products_models import Product, Category, SubCategory
-from src.seller.seller_models import SellerProfile, SellerProduct
-from src.app_auth.auth_models import User, ClientBacket
-from src.orders.orders_models import Orders, OrdersSellerProduct
-from src.chat.chat_models import Chat, Message
+from src.models.ProductsModel import Product, Category, SubCategory
+from src.models.SellerModel import SellerProfile, SellerProduct
+from src.models.UserModel import User
+from src.models.ClientBacketModel import ClientBacket
+from src.models.OrdersModel import Orders, OrdersSellerProduct
+from src.models.ChatModel import Chat, Message
 
 app = FastAPI()
 
