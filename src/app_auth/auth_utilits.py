@@ -1,7 +1,7 @@
 import jwt
 from binascii import Error
 import bcrypt
-from src.config import configtoken
+from src.config import config
 import datetime
 from fastapi import HTTPException
 
@@ -17,12 +17,12 @@ async def check_password(password: str, old_password: bytes) -> bool:
 # создание токена
 async def create_access_token(
     user_id: int,
-    algorithm: str = configtoken.algorithm,
-    private_key: str = configtoken.private_key.read_text()
+    algorithm: str = config.auth_data.algorithm,
+    private_key: str = config.auth_data.private_key.read_text()
 ) -> str:
     payload = {
         "user_id": user_id,
-        "exec": (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=configtoken.days)).timestamp()}
+        "exec": (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=config.auth_data.days)).timestamp()}
     
     token = jwt.encode(payload=payload, algorithm=algorithm, key=private_key)
     return token
@@ -30,8 +30,8 @@ async def create_access_token(
 
 async def valid_access_token(
         token, 
-        algorithm:str = configtoken.algorithm,
-        public_key:str = configtoken.public_key.read_text()
+        algorithm:str = config.auth_data.algorithm,
+        public_key:str = config.auth_data.public_key.read_text()
         ) -> dict:
         
     

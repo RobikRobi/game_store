@@ -1,6 +1,7 @@
-from pydantic_settings import BaseSettings
-from pydantic import BaseModel
 from pathlib import Path
+from pydantic import BaseModel
+from pydantic_settings import BaseSettings
+
 
 BASE_DIR = Path(__file__).parent.parent
 
@@ -12,17 +13,15 @@ class AuthData(BaseModel):
 
 
 class EnvData(BaseSettings):
-    database:str
-    user: str
-    password: str
-    host: str
-    class Config:
-        env_file = ".env"
+    DB_URl: str
+    DB_URl_ASYNC: str
+
 
 
 class Config(BaseModel):
-    auth_data:AuthData = AuthData()
     env_data:EnvData = EnvData()
+    auth_data:AuthData = AuthData()
+   
 
     
 config = Config()
