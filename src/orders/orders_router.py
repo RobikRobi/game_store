@@ -10,7 +10,7 @@ from src.models.UserModel import User
 from src.models.ClientBacketModel import ClientBacket
 from src.models.OrdersModel import Orders, OrdersSellerProduct
 from src.models.SellerModel import SellerProduct
-from types.OrderStatusEnum import OrderStatus
+from src.enums.OrderStatusEnum import OrderStatus
 
 app = APIRouter(prefix="/orders", tags=["orders"])
 

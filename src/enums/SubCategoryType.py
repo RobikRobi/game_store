@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from src.types.CategoryType import CategoryType
+from src.enums.CategoryType import CategoryType
 class SubCategoryType(BaseModel):
     
     id:int

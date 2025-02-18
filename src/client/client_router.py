@@ -11,7 +11,7 @@ from src.get_current_user import get_current_user,get_current_id
 from src.models.ProductsModel import Product,SubCategory,Category
 from src.models.SellerModel import SellerProfile,SellerProduct, Review
 from src.models.ClientBacketModel import ClientBacket
-from src.types.ProductType import ProductType
+from src.enums.ProductType import ProductType
 
 app = APIRouter(prefix="/client", tags=["client"])
 
