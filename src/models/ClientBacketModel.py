@@ -5,7 +5,7 @@ from src.db import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 if typing.TYPE_CHECKING:
-    from .SellerModel import SellerProduct
+    from .seller_models.SellerProductModel import SellerProduct
     from .UserModel import User
 
 

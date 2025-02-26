@@ -11,9 +11,9 @@ from src.db import get_session
 from src.models.UserModel import User
 
 from src.get_current_user import get_current_user,get_current_confirm_seller
-from src.models.SellerModel import SellerProfile,SellerProduct
-from src.models.ProductsModel import Product,SubCategory
-from src.enums.ProductType import ProductType
+from models.seller_models.SellerProductModel import SellerProfile,SellerProduct
+from models.product_models.ProductsModel import Product,SubCategory
+from src.type.ProductType import ProductType
 from src.constants import UPLOAD_FOLDER
 
 app = APIRouter(prefix="/seller", tags=["seller"])

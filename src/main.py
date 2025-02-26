@@ -11,12 +11,13 @@ from src.chat.chat_router import app as chat_app
 
 from src.admin_panel.admin_router import app as admin_app
 
-from src.models.ProductsModel import Product, Category, SubCategory
-from src.models.SellerModel import SellerProfile, SellerProduct
+from models.product_models.ProductsModel import Product, Category, SubCategory
+from models.seller_models.SellerProductModel import SellerProfile, SellerProduct
 from src.models.UserModel import User
 from src.models.ClientBacketModel import ClientBacket
-from src.models.OrdersModel import Orders, OrdersSellerProduct
-from src.models.ChatModel import Chat, Message
+from models.OrdersModel import Orders, OrdersSellerProduct
+from models.chat_models.ChatModel import Chat, Message
+from .constants import UPLOAD_FOLDER
 
 app = FastAPI()
 
@@ -57,8 +58,6 @@ async def create_db():
         await  conn.run_sync(Base.metadata.create_all)
     return({"msg":"db creat! =)"})
 
-
-UPLOAD_FOLDER = 'uploads'
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 

@@ -6,7 +6,7 @@ from src.get_current_user import get_current_user
 from src.db import get_session
 
 from src.models.UserModel import User
-from src.models.ChatModel import Chat, Message
+from models.chat_models.ChatModel import Chat, Message
 
 from src.chat.WebsocetConnect import manager
 
@@ -70,4 +70,4 @@ async def websocket_endpoint(websocket: WebSocket,
     except WebSocketDisconnect:
 
         await manager.disconnect(websocket, chat_id)
-        print(f"Client disconnected from chat {chat_id}")@app.websocket("/ws/chat/{chat_id}")
+        print(f"Client disconnected from chat {chat_id}")

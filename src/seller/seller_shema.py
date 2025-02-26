@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from src.enums.CurrencyEnum import CurrencyType
+from src.enum.CurrencyEnum import CurrencyType
 
 class CreateSellerProfile(BaseModel):
     

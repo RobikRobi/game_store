@@ -4,8 +4,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 
 from src.db import get_session
-from src.models.SellerModel import SellerProfile
-from src.models.ProductsModel import Product,SubCategory,Category
+from models.seller_models.SellerProductModel import SellerProfile
+from models.product_models.ProductsModel import Product,SubCategory,Category
 
 
 app = APIRouter(prefix="/admin", tags=["admin"])
@@ -17,7 +17,7 @@ async def confirm_all( session:AsyncSession = Depends(get_session)):
     for profile in profiles:
         profile.is_confirmed = True
     await session.commit()
-    return {"status":"200"}
+    return {"status":200}
 
 @app.post("/category")
 async def create_category(name:str, session:AsyncSession = Depends(get_session)):

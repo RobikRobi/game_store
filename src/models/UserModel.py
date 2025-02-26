@@ -6,8 +6,8 @@ from src.db import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 if typing.TYPE_CHECKING:
-    from .SellerModel import SellerProfile
-    from .SellerModel import Review, SellerProduct
+    from .seller_models.SellerProductModel import SellerProfile
+    from .seller_models.SellerProductModel import Review, SellerProduct
     from .OrdersModel import Orders
 
 

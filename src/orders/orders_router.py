@@ -8,9 +8,9 @@ from src.get_current_user import get_current_user
 from src.db import get_session
 from src.models.UserModel import User
 from src.models.ClientBacketModel import ClientBacket
-from src.models.OrdersModel import Orders, OrdersSellerProduct
-from src.models.SellerModel import SellerProduct
-from src.enums.OrderStatusEnum import OrderStatus
+from models.OrdersModel import Orders, OrdersSellerProduct
+from models.seller_models.SellerProductModel import SellerProduct
+from src.enum.OrderStatusEnum import OrderStatus
 
 app = APIRouter(prefix="/orders", tags=["orders"])
 

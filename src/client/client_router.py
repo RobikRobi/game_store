@@ -8,10 +8,9 @@ from src.db import get_session
 from src.models.UserModel import User
 
 from src.get_current_user import get_current_user,get_current_id
-from src.models.ProductsModel import Product,SubCategory,Category
-from src.models.SellerModel import SellerProfile,SellerProduct, Review
+from models.seller_models.SellerProductModel import SellerProduct, Review
 from src.models.ClientBacketModel import ClientBacket
-from src.enums.ProductType import ProductType
+from src.type.ProductType import ProductType
 
 app = APIRouter(prefix="/client", tags=["client"])
 

@@ -6,7 +6,8 @@ from sqlalchemy.orm import  Mapped, mapped_column,relationship
 from src.db import Base
 
 if typing.TYPE_CHECKING:
-    from .UserModel import User
+    from ..UserModel import User
+    from .MessageModel import Message
 
 class Chat(Base):
     __tablename__ = "chat_table"
@@ -22,12 +23,3 @@ class Chat(Base):
     messages:Mapped[list["Message"]] = relationship(back_populates="chat", uselist=True)
     
 
-class Message(Base):
-    __tablename__ = "message_table"
-
-    id:Mapped[int] = mapped_column(primary_key=True)
-
-    text:Mapped[str]
-
-    chat_id:Mapped[int] = mapped_column(ForeignKey("chat_table.id", ondelete="CASCADE"))
-    chat:Mapped["Chat"] = relationship(back_populates="messages", uselist=False)

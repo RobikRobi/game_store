@@ -4,11 +4,11 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import  Mapped, mapped_column,relationship
 
 from src.db import Base
-from src.enums.OrderStatusEnum import OrderStatus
+from src.enum.OrderStatusEnum import OrderStatus
 
 if typing.TYPE_CHECKING:
     from .UserModel import User
-    from SellerModel import SellerProduct
+    from models.seller_models.SellerProductModel import SellerProduct
 
 class OrdersSellerProduct(Base):
     __tablename__ = "orders_seller_product_table"

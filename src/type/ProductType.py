@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from src.enums.SubCategoryType import SubCategoryType
+from src.type.SubCategoryType import SubCategoryType
 
 class ProductType(BaseModel):
     
